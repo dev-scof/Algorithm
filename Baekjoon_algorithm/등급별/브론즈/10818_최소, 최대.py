@@ -1,0 +1,1 @@
+a=input;a();t=sorted(map(int,a().split()));print(t[0],t[-1])

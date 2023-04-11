@@ -1,0 +1,51 @@
+/*모든 레코드 조회*/
+SELECT * from ANIMAL_INS ORDER BY ANIMAL_ID
+
+/*최댓값 구하기*/
+SELECT MAX(DATETIME) AS '시간' FROM ANIMAL_INS;
+
+/*역순 정렬하기*/
+SELECT NAME, DATETIME FROM ANIMAL_INS ORDER BY ANIMAL_ID DESC
+
+/*아픈 동물 찾기*/
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS WHERE INTAKE_CONDITION='Sick' /*완전히 같은 경우 = 사용 가능*/
+
+/*어린 동물 찾기*/
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS WHERE INTAKE_CONDITION != 'Aged' ORDER BY ANIMAL_ID /*다른 경우 != 사용 가능*/
+
+/*동물의 아이디와 이름*/
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS ORDER BY ANIMAL_ID
+
+/*여러 기준으로 정렬하기*/
+SELECT ANIMAL_ID, NAME, DATETIME FROM ANIMAL_INS ORDER BY NAME, DATETIME DESC
+
+/*이름이 없는 동물의 아이디*/
+SELECT ANIMAL_ID FROM ANIMAL_INS WHERE NAME IS NULL /*NULL 값을 비교하기 위해서는 IS NULL 또는 IS NOT NULL을 사용해야한다.*/
+
+/*이름이 있는 동물의 아이디*/
+SELECT ANIMAL_ID FROM ANIMAL_INS WHERE NAME IS NOT NULL
+
+/*상위 N개 레코드*/
+SELECT NAME FROM ANIMAL_INS ORDER BY DATETIME LIMIT 1 /*제목에 따르면 이렇게 작성하는 것이 맞다.*/
+SELECT NAME FROM ANIMAL_INS WHERE DATETIME = (SELECT MIN(DATETIME) FROM ANIMAL_INS) /*부속질의?를 사용한 경우이다.*/
+
+/****************************************LEVEL 2*******************************************************************/
+/*동명 동물 수 찾기*/
+SELECT NAME, COUNT(*) AS COUNT FROM ANIMAL_INS GROUP BY NAME HAVING COUNT(*) >=2 AND NAME IS NOT NULL ORDER BY NAME
+/*HAVING으로 GROUP BY했을 때의 조건을 설정할 수 있다.*/
+
+/*NULL 처리하기*/
+SELECT ANIMAL_TYPE, IFNULL(NAME,'No name'), SEX_UPON_INTAKE FROM ANIMAL_INS
+/*IFNULL에 알아볼 수 있었음, IFNULL(필드명, '대체할 값') 필드명이 NULL이면 '대체할 값'으로 대체 함*/
+
+/*없어진 기록 찾기*/
+SELECT AO.ANIMAL_ID, AO.NAME 
+FROM ANIMAL_INS AI RIGHT JOIN ANIMAL_OUTS AO ON AI.ANIMAL_ID=AO.ANIMAL_ID 
+WHERE AI.ANIMAL_ID IS NULL
+/*JOIN에 WHERE까지 작성하는 쿼리여서 헤맸다.
+NULL값인 데이터를 찾아야 하므로
+데이터가 많은? ANIMAL_OUTS로 JOIN을 해주어야한다.
+WHERE의 조건은 JOIN을 할 때의 조건인데, 여기서는 ANIMAL_INS의 ANIMAL_ID가 NULL인 것을 찾는다.
+
+즉, 쿼리를 간단하게 정리하면, ANIAML_INS와 ANIMAL_OUTS을 합치는데, ANIMAL_INS.ANIMAL_ID가 NULL인 것들만 합쳐라
+*/

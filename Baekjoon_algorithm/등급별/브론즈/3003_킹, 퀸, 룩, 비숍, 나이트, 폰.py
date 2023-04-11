@@ -1,0 +1,1 @@
+print(' '.join(map(lambda x, y:str(y-x), map(int, input().split()), [1,1,2,2,2,8])))
