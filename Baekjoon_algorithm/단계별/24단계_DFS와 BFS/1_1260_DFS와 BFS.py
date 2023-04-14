@@ -35,11 +35,26 @@ def dfs(v):
         if i not in visited_dfs:
             dfs(i)
 
+# def dfs(v):
+#     stack=[v]
+#     visited = set()
+#     for i in graph: 
+#         graph[i].sort(reverse=True)
+#     while stack:
+#         cur_node = stack.pop()
+#         if cur_node not in visited:
+#             print(cur_node, end=' ')
+#             visited.add(cur_node)
+#             if cur_node in graph:
+#                 stack.extend(graph[cur_node])
+
+
 def bfs(v):
     q = deque()
     visited_bfs=set() # 방문 집합 초기화
     q.append(v) # 큐에 넣고 시작
-
+    for i in graph: 
+        graph[i].sort()
     while q:
         # 큐에서 하나를 꺼내고
         n = q.popleft()
