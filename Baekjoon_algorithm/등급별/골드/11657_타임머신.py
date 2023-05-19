@@ -37,3 +37,16 @@ else:
         # 도달할 수 있으면 거리 출력
         else:
             print(dist[i])
+
+
+def bellman_ford(S):
+    dist[S] = 0
+    for n in range(N):
+        for vertex, edges in graph.items():
+            for edge in edges:
+                cost = dist[vertex] + edge[1]
+                if cost < dist[edge[0]] and dist[vertex]!=INF:
+                    dist[edge[0]] = cost
+                    if n == N-1:
+                        # 음의 간선 순환임
+                        return True
