@@ -36,3 +36,22 @@ for i in range(1, V+1): # 모든 노드에 대해 반복
         print('INF')
     else:
         print(distance[i])
+
+
+def dijkstra(s):
+    distance[s]=0
+    q = []
+    heapq.heappush(q, (0, s))
+    while q:
+        dist, now = heapq.heappop(q)
+
+        if now not in graph or dist > distance[now]:
+            continue
+        
+        # 인접한 노드에 대해 반복
+        for v, w in graph[now]:
+            cost = dist+w
+            if cost < distance[v]:
+                # 갱신
+                distance[v]=cost
+                heapq.heappush(q, (cost, v))
