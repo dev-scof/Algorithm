@@ -20,12 +20,15 @@ def solution(priorities, location):
     priorities = list(enumerate(priorities))
     while priorities:
         idx, priority = priorities.pop(0)
+        # 마지막 위치일 경우
+        if not priorities:
+            return answer + 1
         max_priority = max([p[1] for p in priorities]) if priorities else -1
         # 현재 프로세스를 실행시켜야할 경우
         if priority >= max_priority:
             answer += 1
-            # 알고 싶은 프로세스의 위치 또는 마지막 위치일 경우
-            if idx == location or not priorities:
+            # 알고 싶은 프로세스의 위치일 경우
+            if idx == location:
                 return answer
         else:
             priorities.append((idx, priority))
