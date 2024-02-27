@@ -101,10 +101,13 @@ def solution(phone_book):
             return True
         if len(prefix) >= len(phone_book[0]):
             return True
-        if prefix in set([x[:len(prefix)] for x in phone_book]):
-            return False
+        for phone in phone_book:
+            for k in range(len(prefix)):
+                if phone[k] != prefix[k]:
+                    break
+            else:
+                return False
     return True
-
 
 if __name__ == '__main__':
     print(solution(["97674223", "1195524421", "119"]))
