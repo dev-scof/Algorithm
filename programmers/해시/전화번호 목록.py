@@ -77,6 +77,22 @@ def solution6(phone_book):
             return False
     return True
 
+def solution7(phone_book):
+    phone_book.sort(key=lambda x: (len(x), x), reverse=True)
+    while phone_book:
+        prefix = phone_book.pop()
+        if not phone_book:
+            return True
+        if len(prefix) >= len(phone_book[0]):
+            return True
+        for phone in sorted([x[:len(prefix)] for x in phone_book], key=lambda x: x[:len(prefix)]):
+            if prefix == phone:
+                return False
+            if phone > prefix:
+                break
+    return True
+
+
 def solution(phone_book):
     phone_book.sort(key=lambda x: len(x), reverse=True)
     while phone_book:
@@ -85,13 +101,10 @@ def solution(phone_book):
             return True
         if len(prefix) >= len(phone_book[0]):
             return True
-        for phone in phone_book:
-            for k in range(len(prefix)):
-                if phone[k] != prefix[k]:
-                    break
-            else:
-                return False
+        if prefix in set([x[:len(prefix)] for x in phone_book]):
+            return False
     return True
+
 
 if __name__ == '__main__':
     print(solution(["97674223", "1195524421", "119"]))
