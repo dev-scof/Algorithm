@@ -93,7 +93,7 @@ def solution7(phone_book):
     return True
 
 
-def solution(phone_book):
+def solution8(phone_book):
     phone_book.sort(key=lambda x: len(x), reverse=True)
     while phone_book:
         prefix = phone_book.pop()
@@ -109,7 +109,27 @@ def solution(phone_book):
                 return False
     return True
 
+
+def solution9(phone_book):
+    phone_book.sort(reverse=True)
+    while phone_book:
+        prefix = phone_book.pop()
+        for phone in phone_book:
+            if phone.startswith(prefix):
+                return False
+    return True
+
+
+def solution(phoneBook):
+    phoneBook = sorted(phoneBook)
+    print(f'sorted_phone = ', phoneBook)
+    for p1, p2 in zip(phoneBook, phoneBook[1:]):
+        print(p1, p2)
+        if p2.startswith(p1):
+            return False
+    return True
+
 if __name__ == '__main__':
     print(solution(["97674223", "1195524421", "119"]))
     print(solution(["123","456","789"]))
-    print(solution(["12","123","1235","567","88"]))
+    print(solution(["12","233","113235","567","88"]))
